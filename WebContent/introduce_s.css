@@ -1,0 +1,34 @@
+@charset "EUC-KR";
+@import
+	url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.section {
+	flex: 1;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.intro{
+	color: #c7d696;
+	font-family: 'Gaegu', cursive;
+	font-size: 100px;
+	text-align:center;
+	margin-top:100px;
+	
+}
+.cont{
+	color: black;
+	font-size: 20px;
+}
