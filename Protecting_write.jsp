@@ -30,8 +30,8 @@ table{width:"400"; height:800px; margin:auto; text-align:center; border:1px soil
 </style>
 </head>
 <body>
-<form action="Lossreport_request.jsp" enctype="multipart/form-data" method="post">
-<div id="notice">분실신고</div>
+<form action="Protecting_request.jsp" enctype="multipart/form-data" method="post">
+<div id="notice">보호중 공고</div>
 <hr width="100%" color=#808080>
 <table>
 <tr>
@@ -61,7 +61,7 @@ table{width:"400"; height:800px; margin:auto; text-align:center; border:1px soil
      </td>
  </tr>
  <tr>
-   <th>• 분실 장소*</th>
+   <th>• 보호 장소*</th>
    <td>
      <select name="place" required>
         <option value="">전체</option>
@@ -88,7 +88,7 @@ table{width:"400"; height:800px; margin:auto; text-align:center; border:1px soil
  </tr>
  
  <tr>
-   <th>• 분실 날짜*</th>
+   <th>• 보호 시작 날짜*</th>
      <td>
        <input type="text" name="day" value="" placeholder=" ex)991231"required></input>
      </td>
@@ -113,7 +113,7 @@ table{width:"400"; height:800px; margin:auto; text-align:center; border:1px soil
    </td>
  </tr>
 </table>
-<button id="button" type="button" onclick="location.href='Lossreport_board.jsp'"> 취소 </button>
+<button id="button" type="button" onclick="location.href='Protecting_board.jsp'"> 취소 </button>
 <button id="button" type="submit" >등록</button>
 </form>
 </body>

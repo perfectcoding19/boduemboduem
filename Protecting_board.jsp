@@ -66,21 +66,21 @@ try{
    pw = "2634"; 
    conn = DriverManager.getConnection(url,user,pw);
    
-   String sql2 = "select COUNT(*) from lossreport;";
+   String sql2 = "select COUNT(*) from protecting;";
    pstmt = conn.prepareStatement(sql2);
    rs3 = pstmt.executeQuery();
    if(rs3.next()){
       total = rs3.getInt(1);
    }
       
-   String sql = "select * from lossreport order by idx desc;";
+   String sql = "select * from protecting order by idx desc;";
    pstmt  = conn.prepareStatement(sql);
    rs2 = pstmt.executeQuery();
    
    
 
 %>
-<div id="notice">분실신고</div>
+<div id="notice">보호중 공고</div>
  <div id="search">
   <form>
     <select name="num1">
@@ -108,8 +108,8 @@ try{
 	    <div style="height: 18%">• 품종: <%=rs2.getString("variety") %></div> 
 	    <div style="height: 18%">• 나이: <%=rs2.getString("old") %></div> 
 	    <div style="height: 18%">• 성별: <%=rs2.getString("sex") %></div> 
-        <div style="height: 18%">• 분실 지역: <%=rs2.getString("lostplace") %></div>
-        <div style="height: 18%">• 작성 날짜: <%=sf.format(nowTime)%></div>
+        <div style="height: 18%">• 보호 지역: <%=rs2.getString("protectplace") %></div>
+        <div style="height: 18%">• 보호시작 날짜: <%=sf.format(nowTime)%></div>
 	</div>
  <%    
    }
@@ -123,7 +123,7 @@ try{
     }
 %>   
 
- <button id="button" onclick="location.href='Lossreport_write.jsp'" style="margin-top: 200px;">글쓰기</button>
+ <button id="button" onclick="location.href='Protecting_write.jsp'" style="margin-top: 200px;">글쓰기</button>
 </div> 
 <div>
 
