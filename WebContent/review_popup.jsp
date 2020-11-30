@@ -1,28 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.*,java.sql.*" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>봉사활동 / 입양후기 팝업</title>
+<title>입양후기</title>
 </head>
 <body>
-		<table width="100%">
-			<tr>
-				<td align="center"><img src="image/dog.jpg"  width="350" height="400"></td> 
-			</tr>
-			<tr>
-				<td align="center"><strong>토리와 함께라서 행복해요</strong></td> 
-			</tr>
-			<tr>
-				<td align="center">
-					<div><p>
-			<textarea cols="50" rows="10" style="border:none; resize: none; " readonly="readonly">
-토리를 입양한지 이제 한달이 조금 넘었습니다. 우연히 보듬보듬 사이트를 알게되어 공고를 보던 중 토리의 사진을 보게 되었는데 보는 순간 가족이 되어줘야겠다고 생각했어요!
-			</textarea></p>
-		</div>
-				</td> 
-			</tr>
-		</table>
+		<% 
+		        request.setCharacterEncoding("utf-8"); 
+				String no = request.getParameter("no");
+				String tempStart = request.getParameter("page");
+
+		        Connection con;
+				Statement stmt;
+				ResultSet rs = null;
+				
+				request.setCharacterEncoding("utf-8"); 
+		
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useSSL=false","root","kmj13999");
+					
+					stmt = con.createStatement();
+					String sql = "select * from review where no = "+no;
+					rs = stmt.executeQuery(sql);
+					rs.next();
+					
+					out.print("<table width='100%'>");
+			    	out.print("  <tr>");
+			    	out.print("	   <td align='center'><img src='image/"+rs.getString("image")+"'  width='350' height='400'></td>");
+			    	out.print("  </tr>");
+			    	out.print("  <tr>");
+			    	out.print("	   <td align='center'><strong>"+rs.getString("title")+"</strong></td>");
+			    	out.print("  </tr>");
+			    	out.print("  <tr>");
+			    	out.print("   <td align='center'>");
+			    	out.print("     <div><p>");
+			    	out.print("       <textarea cols='60' rows='20' style='border:none; resize: none; font-family: 맑은 고딕;' readonly='readonly'>");
+			    	out.print(rs.getString("contents"));
+			    	out.print("       </textarea></p>");
+					out.print("     </div>");
+					out.print("   </td>");
+			    	out.print("  </tr>");
+			    	out.print("</table>");
+
+					rs.close();
+					stmt.close();
+					con.close();
+				} catch (SQLException e1) {
+					out.print("SQLException : " + e1);
+				} catch (Exception e) {
+					out.print("Exception : " + e);
+				}
+		%>
 </body>
 </html>
