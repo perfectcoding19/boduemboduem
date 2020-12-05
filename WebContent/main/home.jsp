@@ -13,7 +13,10 @@
 		<jsp:include page="header.jsp" flush="false" />
 	</div>
 	<div class="section">
+		<!--공고 슬라이더-->
 		<jsp:include page="slide.jsp" flush="false" />
+		
+		<!--공지사항-->
 		<div stlye="height:330px; width:5000px;">
 			<table width='50%'>
 				<tr height='40'>
