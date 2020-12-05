@@ -12,13 +12,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 
-<script type="text/javascript">
-	function notice_read( no) {
-			document.getElementById('no').setAttribute('value',no);
-			document.getElementById('form1').submit();
-		}    
-</script>
-
 <!-- 클래스명은 변경하면 안 됨 -->
 <div class="swiper-container">
 	<div class="swiper-wrapper">
