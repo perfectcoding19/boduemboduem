@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../main/header_s.css">
+<link rel="stylesheet" type="text/css" href="header_s.css">
 </head>
 <body>
 	<%
@@ -15,7 +15,7 @@
 	%>
 	<div class="hd">
 		<h1>
-			<a href="../main/home.jsp">보듬보듬</a>
+			<a href="home.jsp">보듬보듬</a>
 		</h1>
 
 		<%
@@ -54,11 +54,12 @@
 						<a href="adopt_info.jsp">입양안내</a> <a href="got_info.jsp">습득시
 							안내</a>
 					</div></li>
-				<li class="dropdown"><a class="dropbtn" href="">봉사활동/입양후기</a>
+				<li class="dropdown"><a class="dropbtn"
+					href="review_adoption.jsp">봉사활동/입양후기</a>
 					<div class="dropdown-content">
-						<a href="../review/review_list.jsp?type=volunteer">봉사활동</a> <a href="../review/review_list.jsp?type=adoption">입양후기</a>
+						<a href="">봉사활동</a> <a href="review_adoption.jsp">입양후기</a>
 					</div></li>
-				<li><a href="../notice/notice_list.jsp">공지사항</a></li>
+				<li><a href="notice_list.jsp">공지사항</a></li>
 			</ul>
 		</nav>
 	</div>
