@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
-<link rel="stylesheet" type="text/css" href="home_s.css">
+<link rel="stylesheet" type="text/css" href="../main/home_s.css">
 </head>
 <body>
 	<div class="section">
@@ -49,7 +49,7 @@
 		
 				try {
 					Class.forName("com.mysql.jdbc.Driver");
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useSSL=false","root","kmj13999");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/boduemdb?useSSL=false","root","seoyeon001");
 					
 					stmt = con.createStatement();
 					String sql = "select * from notice where no = "+no;
@@ -80,10 +80,8 @@
 			    	out.print("     <td width='10%'></td>");
 			    	out.print("  </tr>");
 			    	out.print("</table>");
-
 					sql = "update notice set views = views + 1 where no = "+no;
 					stmt.executeUpdate(sql);
-
 					rs.close();
 					stmt.close();
 					con.close();
