@@ -1,0 +1,53 @@
+@charset "EUC-KR";
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.section {
+	flex: 1;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: ¸¼Àº °íµñ;
+}
+
+.section li {
+	list-style: none;
+	clear: both;
+	display: block;
+	padding: 3px;
+}
+
+.section ul {
+	list-style-type: none;
+	padding: 30px;
+}
+
+.info {
+	text-align:center;
+	margin-top:50px;
+}
+
+.cont {
+	color: black;
+	font-size: 15px;
+	width:700px;
+	text-align:left;
+	margin:0 auto;
+}
+
+.big {
+	color: #c7d696;
+}
+
+.tri {
+	margin: 0 0px 0 -18px;
+}
