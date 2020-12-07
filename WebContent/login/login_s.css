@@ -1,0 +1,54 @@
+@charset "EUC-KR";
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.section {
+	flex: 1;
+	margin: auto auto;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: ¸¼Àº °íµñ;
+}
+
+table {
+	text-align: left;
+	border:0;
+}
+
+td {
+	padding: 5px;
+	font-size: 13px;
+}
+
+.tit {
+	text-align: center;
+	font-size: 40px;
+	margin-top: 100px;
+	margin-bottom: 20px;
+}
+
+.s_btn {
+	background: #c7d696;
+	border: 0;
+	border-radius: 5px;
+	width: 305px;
+	height: 35px;
+	font-size: 14px;
+	margin-top: 10px;
+	cursor:pointer;
+}
+
+.box {
+	height: 40px;
+	width: 300px;
+}
