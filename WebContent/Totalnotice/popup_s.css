@@ -1,0 +1,39 @@
+* {
+	font-family: "맑은 고딕";
+}
+
+th {
+	border-bottom: 2px solid #c7d696;
+	background: white;
+	text-align: left;
+	font-size: 18px;
+	color: balck;
+}
+
+td {
+	border-bottom: 2px solid #c7d696;
+	text-align: left;
+	font-size: 15px;
+	color: balck;
+}
+
+#notice {
+	margin-left: 150px;
+	margin-top: 40px;
+	font-size: 30px;
+	font-weight: bold
+}
+
+table {
+	width: 600px;
+	height: 400px;
+	margin: auto;
+	text-align: center;
+	border: 1px soild #c7d696;
+}
+
+#h1 {
+	font-size: 15px;
+	margin-right: 100px;
+	float: right;
+}

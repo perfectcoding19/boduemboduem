@@ -1,0 +1,75 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.section {
+	flex: 1;
+	margin-bottom:30px;
+	margin-top:30px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 맑은 고딕;
+}
+th {
+	border-bottom: 2px solid #c7d696;
+	background: white;
+	text-align: left;
+	font-size: 17px;
+	color: balck;
+}
+
+td {
+	border-bottom: 2px solid #c7d696;
+	text-align: left;
+	font-size: 15px;
+	color: balck;
+}
+
+#notice {
+	margin-left: 150px;
+	font-size: 30px;
+	position:relative;
+	left:110px;
+	width:65.5%;
+}
+
+table {
+	width: 66%;
+	height: 600px;
+	margin: auto;
+	text-align: center;
+	border: 1px soild #c7d696;
+}
+
+button {
+	
+	float: left;
+	border: 0;
+	background: #c7d696;
+	margin-left:5px;
+	cursor:pointer;
+	border-radius: 5px;
+	width:50px;
+	padding:2px;
+}
+
+.button{
+	position:relative;
+	left:700px;
+	width:110px;
+	margin-top:15px;
+}
+
+#h1 {
+	font-size: 15px;
+	margin-right: 100px;
+	float: right;
+}
