@@ -14,15 +14,90 @@ body {
 
 .section {
 	flex: 1;
+	margin-bottom: 30px;
+	margin-top: 30px;
 }
 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: ∏º¿∫ ∞ÌµÒ;
+	font-family: "ÎßëÏùÄ Í≥†Îîï";
 }
 
-a:link {text-decoration:none; color:black;}
-a:visited {text-decoration:none; color:black;}
-a:hover {text-decoration:none; color:black;}
-a:active {text-decoration:none; color:black;}
+h3 {
+	margin-bottom: 6px;
+	margin-left: 6px;
+}
+
+table {
+	table-layout: fixed;
+}
+
+td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.notice {
+	float: left;
+	position: relative;
+	left: 250px; height : 330px;
+	width: 500px;
+	height: 330px;
+}
+
+.situat {
+	position: relative;
+	top: 25px;
+	right: 260px;
+	border: 3px solid #c7d696;
+	width: 480px;
+	height: 130px;
+	float: right;
+	border-radius:7px;
+}
+
+.situat_t {
+	width: 400px;
+	position: relative;
+	top: 15px;
+	left: 40px;
+}
+
+.s_num {
+	text-align: right;
+	font-family: 'Gaegu';
+	font-size: 24px;
+}
+
+.situ_num {
+	margin-top: 10px;
+	margin-left: 10px;
+	text-align: left;
+	font-size: 18px;
+}
+
+.call{
+	position: relative;
+	top: 180px;
+	left: 225.5px;
+	border: 3px solid #c7d696;
+	width: 480px;
+	height: 100px;
+	float: right;
+	border-radius:7px;
+}
+
+.img{
+	margin-left:60px;
+}
+
+.word{
+	height:30px;
+	width:225px;
+}
+.t_call{
+	height: 100px;
+	width:425px;
+}
