@@ -7,13 +7,13 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../main/header_s.css">
+<link rel="stylesheet" type="text/css" href="../Totalnotice/board_s.css">
+<title>보호중 동물</title>
 <script type="text/javascript">
  function categoryChange(e){
   var good_개 = ["선택", "기타", "골든 리트리버", "그레이 하운드", "그레이트 덴", "닥스훈트", "달마시안", "도베르만", "말라뮤트", "말티즈", "푸들", "스탠다들 푸들", "토이 푸들", "믹스견", "보더콜리", 
@@ -84,7 +84,6 @@
   <!--
 function date_mask(objValue) {
   var v = objValue.replace("--", "-");
-
      if (v.match(/^\d{4}$/) !== null) {
          v = v + '-';
      } else if (v.match(/^\d{4}\-\d{2}$/) !== null) {
@@ -107,191 +106,92 @@ function date_mask(objValue) {
     }
     
  </script>
-<style>
-#notice{
-margin-left:150px; margin-top:40px; font-family:'맑은 고딕'; font-size:30px;
-}
-#button{float:right;border:2px solid #c7d696; background:#c7d696; font-size:15px; font-family:"맑은 고딕";}
-.main{ 
-   margin-top: 30px;
-   display:inline-block;
-    width: 70%;
-    height: 500px;
-    align-content: center;
-    align-items: center;
-    margin-left: 15%;
-    margin-right: 15%
-}
-.sub{ 
-    font-family:"맑은 고딕"; font-size:15px;
-    height: 200px;
-    float: left;
-    width: 49.85%;
-    padding-bottom: 30px;
-}
-table{
-font-family:'맑은 고딕';
-width:70%;
-height:140px;
-border: 2px solid #c7d696;
-border-radius: 8px 8px 8px 8px;
-margin-left:auto;
-margin-right:auto;
-}
-</style>
 </head>
 <body>
-<%
-		String id = null;
-	if (session.getAttribute("id") != null) {
-		id = (String) session.getAttribute("id");
-	}
-	%>
-	<div class="hd">
-		<h1>
-			<a href="home.jsp">보듬보듬</a>
-		</h1>
-
-		<%
-			if (id == null) {
-		%>
-		<div class="joinup">
-			<ul>
-				<li><a href="login.jsp">로그인</a></li>
-				<li><a href="join.jsp">회원가입</a></li>
-			</ul>
-		</div>
-		<%
-			} else {
-		%>
-		<div class="joinup">
-			<ul>
-				<li><a href="logout_db.jsp">로그아웃</a></li>
-				<li><a href="mypage.jsp">마이페이지</a></li>
-			</ul>
-		</div>
-		<%
-			}
-		%>
-
-		<nav class="menu">
-			<ul>
-				<li><a href="introduce.jsp">소개</a></li>
-				<li class="dropdown"><a class="dropbtn" href="">유기동물 공고</a>
-					<div class="dropdown-content">
-						<a href="../Totalnotice/Totalnotice_board.jsp">전체 공고</a> <a href="../Protecting/Protecting_board.jsp">보호중 공고</a>
-					</div></li>
-				<li><a href="../Lossreport/Lossreport_board.jsp">분실신고</a></li>
-				<li class="dropdown"><a class="dropbtn" href="adopt_info.jsp">입양/습득시
-						안내</a>
-					<div class="dropdown-content">
-						<a href="adopt_info.jsp">입양안내</a> <a href="got_info.jsp">습득시
-							안내</a>
-					</div></li>
-				<li class="dropdown"><a class="dropbtn"
-					href="review_adoption.jsp">봉사활동/입양후기</a>
-					<div class="dropdown-content">
-						<a href="">봉사활동</a> <a href="review_adoption.jsp">입양후기</a>
-					</div></li>
-				<li><a href="notice_list.jsp">공지사항</a></li>
-			</ul>
-		</nav>
+	<div class="header">
+		<jsp:include page="../main/header.jsp" flush="false" />
 	</div>
-<%
-Connection conn = null;
-PreparedStatement pstmt = null;
+	<%
+		Connection conn = null;
+	PreparedStatement pstmt = null;
+	Class.forName("com.mysql.jdbc.Driver");
+	String url = "jdbc:mysql://localhost:3306/boduemdb?useSSL=false";
+	String user = "root";
+	String pw = "seoyeon001";
+	int total = 0;
+	ResultSet rs2 = null;
+	ResultSet rs3 = null;
+	String startDay = "";
+	String endDay = "";
+	String variety = "";
+	String variety1 = "";
+	String place = "";
+	String place1 = "";
+	startDay = request.getParameter("day1") == null ? "" : request.getParameter("day1");
+	endDay = request.getParameter("day2") == null ? "" : request.getParameter("day2");
+	variety = request.getParameter("variety") == null ? "" : request.getParameter("variety");
+	variety1 = request.getParameter("variety1") == null ? "" : request.getParameter("variety1");
+	place = request.getParameter("place") == null ? "" : request.getParameter("place");
+	place1 = request.getParameter("place1") == null ? "" : request.getParameter("place1");
+	String where = "";
+	if (!"".equals(startDay)) {
+		where += " AND day BETWEEN '" + startDay + "'" + " AND '" + endDay + "' ";
+	}
+	if (!"".equals(variety)) {
+		where += " AND variety='" + variety + "'";
 
+	}
+	if (!"".equals(variety1)) {
+		where += " AND variety1='" + variety1 + "'";
+	}
+	if (!"".equals(place)) {
+		where += " AND place='" + place + "'";
 
-Class.forName("com.mysql.jdbc.Driver");
-String url = "jdbc:mysql://localhost:3306/mydb?useSSL=false";
-String user = "root";
-String pw = "2634"; 
-int total = 0;
-ResultSet rs2 = null;
-ResultSet rs3 = null;
+	}
+	if (!"".equals(place1)) {
+		where += " AND place1='" + place1 + "'";
+	}
+	try {
+		conn = DriverManager.getConnection(url, user, pw);
 
-String startDay = "";
-String endDay = "";
-String variety = "";
-String variety1 = "";
-String place = "";
-String place1 ="";
+		String sql2 = "select COUNT(*) from protecting where 1=1 " + where;
+		pstmt = conn.prepareStatement(sql2);
+		rs3 = pstmt.executeQuery();
+		if (rs3.next()) {
+			total = rs3.getInt(1);
+		}
+		boolean prev;
+		boolean next;
+		int displayPage = 10;
+		int displayRow = 10;
+		int pageCnt = 1;
+		try {
+			pageCnt = Integer.parseInt((String) request.getParameter("pageCnt"));
+		} catch (Exception e) {
+			pageCnt = 1;
+		}
+		int endPage = ((int) Math.ceil(pageCnt / (double) displayPage)) * displayPage;
+		int beginPage = endPage - (displayPage - 1);
+		int totalPage = (int) Math.ceil(total / (double) displayRow);
 
+		if (totalPage < endPage) {
+			endPage = totalPage;
+			next = false;
+		} else {
+			next = true;
+		}
+		prev = (beginPage == 1) ? false : true;
 
-startDay =  request.getParameter("day1") == null ? "" :  request.getParameter("day1");
+		int term = displayRow;
+		int pageNum = (pageCnt - 1) * term;
 
-endDay =  request.getParameter("day2") == null ? "" :  request.getParameter("day2");
-
-variety =  request.getParameter("variety") == null ? "" :  request.getParameter("variety");
-
-variety1 = request.getParameter("variety1") == null ? "" :  request.getParameter("variety1");
-
-place = request.getParameter("place") == null ? "" :  request.getParameter("place");
-
-place1 = request.getParameter("place1") == null ? "" :  request.getParameter("place1");
-
-
-String where ="";
-if(!"".equals(startDay)) {
-	where += " AND day BETWEEN '" + startDay + "'"+" AND '" + endDay +"' "; 
-}
-if(!"".equals(variety)) {
-	where += " AND variety='"+variety+"'";
-	
-}
-if(!"".equals(variety1)) {
-	where += " AND variety1='"+variety1+"'";
-}
-
-if(!"".equals(place)) {
-	where += " AND place='"+place+"'";
-	
-}
-if(!"".equals(place1)) {
-	where += " AND place1='"+place1+"'";
-}
-try{
-
-   conn = DriverManager.getConnection(url,user,pw);
-   
-   String sql2 = "select COUNT(*) from protecting where 1=1 " + where;
-   pstmt = conn.prepareStatement(sql2);
-   rs3 = pstmt.executeQuery();
-   if(rs3.next()){
-      total = rs3.getInt(1);
-   } 
-   boolean prev;
-   boolean next;
-   int displayPage = 10;
-   int displayRow = 10 ; 
-   int pageCnt = 1;
-   try{
-   	  pageCnt = Integer.parseInt((String) request.getParameter("pageCnt"));
-   }catch(Exception e){
-	   pageCnt = 1;
-   }   
-   int endPage = ((int)Math.ceil(pageCnt/(double)displayPage))*displayPage;
-   int beginPage = endPage - (displayPage - 1);
-
-   int totalPage = (int)Math.ceil(total/(double)displayRow);
-   
-   if(totalPage<endPage){
-       endPage = totalPage;
-       next = false;
-   }else{
-       next = true;
-   }
-   prev = (beginPage==1)?false:true;
- 
-   int term = displayRow;   
-   int pageNum = (pageCnt-1)*term;
-   
-   String sql = String.format("select * from protecting WHERE 1=1 %s order by idx desc limit %d,%d;",where,pageNum,term);
-   System.out.println(sql);
-   pstmt  = conn.prepareStatement(sql);
-   rs2 = pstmt.executeQuery();  
-%>
-<script>
+		String sql = String.format("select * from protecting WHERE 1=1 %s order by idx desc limit %d,%d;", where, pageNum,
+		term);
+		System.out.println(sql);
+		pstmt = conn.prepareStatement(sql);
+		rs2 = pstmt.executeQuery();
+	%>
+	<script>
 	function fncSubmit() {
 		var form = document.search;
 		if(form.day1.value != null && form.day1.value != "") {
@@ -305,125 +205,173 @@ try{
 		form.submit();
 	}
 </script>
-<div id="notice">보호 중</div>
-<br>
-<hr width="100%" color=#c7d696 size="2">
-<br>
-<form name="search" action="javascript:fncSubmit()" method="get">
-	<table>
-		<tr>
-		  <th>• 보호 시작 날짜</th>
-		  <td>
-		  <input type="text" name="day1" value="<%=startDay %>" placeholder="ex) 1999-01-01" onkeyup="this.value = date_mask(this.value)"></input> ~
-		  <input type="text" name="day2" value="<%= endDay %>" placeholder="ex) 1999-12-31" onkeyup="this.value = date_mask(this.value)"></input> (검색 시작 날짜와 끝 날짜를 모두 입력하세요.)
-		  </td>
-		</tr>
-		<tr>
-		 <th>• 품종</th>
-		 <td>
-		 <select name="variety" onchange="categoryChange(this)">
-		  <option value="">선택</option>
-		        <option <%if(variety.equals("개")){ %> selected <%} %> name="개" value="개">개</option>
-		        <option  <%if(variety.equals("고양이")){ %> selected <%} %> name="고양이" value="고양이">고양이</option>
-		        <option  <%if(variety.equals("기타")){ %> selected <%} %> name="기타" value="기타">기타</option>
-		  </select>
-		  <select id="good" name="variety1">
-		  <option  value ="" >선택</option>
-		  </select>
-		 </td>
-		</tr>
-		<tr>
-		   <th>• 발견 장소</th>
-		   <td>
-		     <select name="place" onchange="categoryChange(this)">
-		        <option value="">전체</option>
-		        <option  <%if(place.equals("서울특별시")){ %> selected <%} %> value="서울특별시">서울시</option>
-		        <option <%if(place.equals("인천광역시")){ %> selected <%} %> value="인천광역시">인천시</option>
-		        <option <%if(place.equals("대구광역시")){ %> selected <%} %> value="대구광역시">대구시</option>
-		        <option <%if(place.equals("대전광역시")){ %> selected <%} %> value="대전광역시">대전시</option>
-		        <option <%if(place.equals("광주광역시")){ %> selected <%} %> value="광주광역시">광주시</option>
-		        <option <%if(place.equals("부산광역시")){ %> selected <%} %> value="부산광역시">부산시</option>
-		        <option <%if(place.equals("울산광역시")){ %> selected <%} %> value="울산광역시">울산시</option>
-		        <option <%if(place.equals("세종특별시")){ %> selected <%} %> value="세종특별시">세종시</option>
-		        <option <%if(place.equals("경기도")){ %> selected <%} %> value="경기도">경기도</option>
-		        <option <%if(place.equals("강원도")){ %> selected <%} %> value="강원도">강원도</option>
-		        <option <%if(place.equals("충청북도")){ %> selected <%} %> value="충청북도">충청북도</option>
-		        <option <%if(place.equals("충청남도")){ %> selected <%} %> value="충청남도">충청남도</option>
-		        <option <%if(place.equals("전라북도")){ %> selected <%} %> value="전라북도">전라북도</option>
-		        <option <%if(place.equals("전라남도")){ %> selected <%} %> value="전라남도">전라남도</option>
-		        <option <%if(place.equals("경상북도")){ %> selected <%} %> value="경상북도">경상북도</option>
-		        <option <%if(place.equals("경상남도")){ %> selected <%} %> value="경상남도">경상남도</option>
-		        <option <%if(place.equals("제주도")){ %> selected <%} %> value="제주도">제주도</option>
-		  </select>
-		  <select id="place1" name="place1">
-		  <option value="">선택</option>
-		  </select>
-		  <input type=submit value="조회" id="button">
-		 </td>
-	</tr>
-	</table>
-</form>
-<div class="main">
-<div>
-   <%
-   while(rs2.next()){
-      
-   
-   %>
-    <div class="sub">
-	    <button style="border: 1px solid; width: 40%; height: 80%; float: left;" onclick="popup_open(<%=rs2.getString("idx") %>)">
-	    <img alt="" src="../image/<%=rs2.getString("filename") %>" style="width: 100%; height: 100%"/></button>
-	    <div style="height: 18%">&nbsp;• 품종: <%=rs2.getString("variety") %> > <%=rs2.getString("variety1")%></div> 
-	    <div style="height: 18%">&nbsp;• 추정 나이: <%=rs2.getString("old") %></div> 
-	    <div style="height: 18%">&nbsp;• 성별: <%=rs2.getString("sex") %></div> 
-        <div style="height: 18%">&nbsp;• 발견 장소: <%=rs2.getString("place") %> <%=rs2.getString("place1")%> <%=rs2.getString("place2")%> </div>
-        <div style="height: 18%">&nbsp;• 보호 시작 날짜: <%=rs2.getString("day")%></div>
+	<div class="section">
+		<div id="notice">
+			보호중 동물
+			<hr style="margin-top:15px;" width="100%" color=#c7d696 size="2">
+			<br>
+		</div>
+		<form name="search" action="javascript:fncSubmit()" method="get">
+			<table>
+				<tr>
+					<th>• 보호 시작 날짜</th>
+					<td><input type="text" name="day1" value="<%=startDay%>"
+						placeholder="ex) 1999-01-01"
+						onkeyup="this.value = date_mask(this.value)"></input> ~ <input
+						type="text" name="day2" value="<%=endDay%>"
+						placeholder="ex) 1999-12-31"
+						onkeyup="this.value = date_mask(this.value)"></input> (검색 시작 날짜와 끝
+						날짜를 모두 입력하세요.)</td>
+				</tr>
+				<tr>
+					<th>• 품종</th>
+					<td><select name="variety" onchange="categoryChange(this)">
+							<option value="">선택</option>
+							<option <%if (variety.equals("개")) {%> selected <%}%> name="개"
+								value="개">개</option>
+							<option <%if (variety.equals("고양이")) {%> selected <%}%>
+								name="고양이" value="고양이">고양이</option>
+							<option <%if (variety.equals("기타")) {%> selected <%}%> name="기타"
+								value="기타">기타</option>
+					</select> <select id="good" name="variety1">
+							<option value="">선택</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th>• 발견 장소</th>
+					<td><select name="place" onchange="categoryChange(this)">
+							<option value="">전체</option>
+							<option <%if (place.equals("서울특별시")) {%> selected <%}%>
+								value="서울특별시">서울시</option>
+							<option <%if (place.equals("인천광역시")) {%> selected <%}%>
+								value="인천광역시">인천시</option>
+							<option <%if (place.equals("대구광역시")) {%> selected <%}%>
+								value="대구광역시">대구시</option>
+							<option <%if (place.equals("대전광역시")) {%> selected <%}%>
+								value="대전광역시">대전시</option>
+							<option <%if (place.equals("광주광역시")) {%> selected <%}%>
+								value="광주광역시">광주시</option>
+							<option <%if (place.equals("부산광역시")) {%> selected <%}%>
+								value="부산광역시">부산시</option>
+							<option <%if (place.equals("울산광역시")) {%> selected <%}%>
+								value="울산광역시">울산시</option>
+							<option <%if (place.equals("세종특별시")) {%> selected <%}%>
+								value="세종특별시">세종시</option>
+							<option <%if (place.equals("경기도")) {%> selected <%}%> value="경기도">경기도</option>
+							<option <%if (place.equals("강원도")) {%> selected <%}%> value="강원도">강원도</option>
+							<option <%if (place.equals("충청북도")) {%> selected <%}%>
+								value="충청북도">충청북도</option>
+							<option <%if (place.equals("충청남도")) {%> selected <%}%>
+								value="충청남도">충청남도</option>
+							<option <%if (place.equals("전라북도")) {%> selected <%}%>
+								value="전라북도">전라북도</option>
+							<option <%if (place.equals("전라남도")) {%> selected <%}%>
+								value="전라남도">전라남도</option>
+							<option <%if (place.equals("경상북도")) {%> selected <%}%>
+								value="경상북도">경상북도</option>
+							<option <%if (place.equals("경상남도")) {%> selected <%}%>
+								value="경상남도">경상남도</option>
+							<option <%if (place.equals("제주도")) {%> selected <%}%> value="제주도">제주도</option>
+					</select> <select id="place1" name="place1">
+							<option value="">선택</option>
+					</select> <input type=submit value="조회" id="button"></td>
+				</tr>
+			</table>
+		</form>
+		<div class="main">
+			<div>
+				<%
+					while (rs2.next()) {
+				%>
+				<div class="sub">
+					<button
+						style="margin-left:4px; border: none; width: 40%; height: 80%; float: left;"
+						onclick="popup_open(<%=rs2.getString("idx")%>)">
+						<img alt="" src="../image/<%=rs2.getString("filename")%>"
+							style="width: 100%; height: 100%" />
+					</button>
+					<div style="height: 15%;margin-top:6px;">
+						&nbsp;• 품종 :
+						<%=rs2.getString("variety")%>
+						-
+						<%=rs2.getString("variety1")%></div>
+					<div style="height: 15%">
+						&nbsp;• 추정 나이 :
+						<%=rs2.getString("old")%></div>
+					<div style="height: 15%">
+						&nbsp;• 성별 :
+						<%=rs2.getString("sex")%></div>
+					<div style="height: 15%">
+						&nbsp;• 발견 장소 :
+						<%=rs2.getString("place")%>
+						<%=rs2.getString("place1")%>
+						<%=rs2.getString("place2")%>
+					</div>
+					<div style="height: 15%">
+						&nbsp;• 보호 시작 날짜:
+						<%=rs2.getString("day")%></div>
+				</div>
+				<%
+					}
+				%>
+			</div>
+			<hr width="100%" color=#c7d696 size="2">
+			<%
+				//if(prev){
+			%>
+			<%-- 	 <a href="Protecting_board.jsp?pageCnt=<%=pageCnt-1 %>">prev</a>  --%>
+			<div style="display: inline-block; margin-left: 50%">
+				<%
+					//}
+				for (int i = beginPage; i <= endPage; i++) {
+				%>
+				<a style="color:black;" href="Protecting_board.jsp?pageCnt=<%=i%>"><%=i%></a>
+				<%
+					}
+				%>
+			</div>
+			<%
+				} catch (SQLException ex) {
+			out.println(ex.getMessage());
+			ex.printStackTrace();
+			} finally {
+			if (rs2 != null)
+				try {
+					rs2.close();
+				} catch (SQLException ex) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException ex) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException ex) {
+				}
+			}
+			%>
+			<%
+				String id = null;
+			if (session.getAttribute("id") != null) {
+				id = (String) session.getAttribute("id");
+			}
+			if (id == null) {
+			%>
+
+			<%
+				} else {
+			%>
+			<button id="button" onclick="location.href='../Protecting/Protecting_write.jsp'"
+				style="margin-top: 40px;">글쓰기</button>
+			<%
+				}
+			%>
+		</div>
 	</div>
- <%    
-   }
-   
-   %>
-</div>
-<hr width="100%" color=#c7d696 size="2">
-<% 
-
-	//if(prev){
-		%>
-	<%-- 	 <a href="Protecting_board.jsp?pageCnt=<%=pageCnt-1 %>">prev</a>  --%>
-	<div style="display: inline-block; margin-left: 50%"> 
-		<% 
-	//}
-
-	for(int i=beginPage; i<=endPage; i++){
-		%>
-		<a href="Protecting_board.jsp?pageCnt=<%=i %>"><%=i %></a>
-		<%
-	}
-
-%>
-</div>
-   <%
-    } catch(SQLException ex) {
-        out.println(ex.getMessage());
-        ex.printStackTrace();
-    } finally {
-        if (rs2 != null) try { rs2.close(); } catch(SQLException ex) {}
-        if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
-        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
-    }
-%>
-<%
-	
-%>
- <button id="button" onclick="location.href='Protecting_write.jsp'" style="margin-top: 40px;">글쓰기</button> 
-</div>
-<br>
-<br>
-<br>
-<br>
-<div class="footer">
+	<div class="footer">
 		<jsp:include page="../main/footer.jsp" flush="false" />
 	</div>
-</body>
 </body>
 </html>
